@@ -19,6 +19,7 @@ Application immobilière multilingue (FR / EN / AR avec RTL) prête pour Vercel 
 | `RESEND_API_KEY` | Oui pour l’email | Clé API Resend (`re_...`) |
 | `RESEND_FROM_EMAIL` | Oui pour l’email | Expéditeur vérifié, ex. `SHD Immobilier <contact@shdimmobilier.ma>` |
 | `CONTACT_TO_EMAIL` | Oui pour l’email | Adresse qui reçoit les demandes |
+| `NEXT_PUBLIC_BOOKING_ENGINE_URL` | Quand le moteur est prêt | URL publique du moteur de réservation. Sans valeur, le bouton reste visible mais désactivé. |
 
 Copiez `.env.example` vers `.env.local` uniquement pour le développement local. `.env.local` est ignoré par Git. Ne commitez jamais de secret.
 
@@ -38,7 +39,9 @@ Les collections `properties`, `contacts` et `import_logs` ainsi que l’index un
 2. Dans **Domains**, ajoutez votre domaine d’envoi et recopiez chez votre registrar les enregistrements DNS demandés (SPF/DKIM).
 3. Attendez que le domaine soit marqué **Verified**. `RESEND_FROM_EMAIL` doit utiliser ce domaine vérifié.
 4. Créez une clé API et placez-la uniquement dans `RESEND_API_KEY` sur Vercel.
-5. Définissez `CONTACT_TO_EMAIL`. Le visiteur est automatiquement configuré en `replyTo`.
+5. Définissez `CONTACT_TO_EMAIL=shdimmobillier@gmail.com`. Le visiteur est automatiquement configuré en `replyTo`.
+
+Les prix ne sont pas affichés sur le site public. Quand le lien du moteur de réservation est disponible, ajoutez-le dans `NEXT_PUBLIC_BOOKING_ENGINE_URL` sur Vercel puis redéployez le projet.
 
 Le contact est d’abord enregistré dans MongoDB. Si Resend échoue, il reste enregistré avec `emailDelivery.status = failed` et l’erreur est visible dans l’administration.
 
