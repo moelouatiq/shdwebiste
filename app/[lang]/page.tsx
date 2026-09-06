@@ -1,0 +1,3 @@
+import {HomePage} from "@/components/HomePage";import {getDb} from "@/lib/mongodb";import {localizeProperty} from "@/lib/properties";import type {Lang,Property} from "@/lib/types";
+export const dynamic="force-dynamic";
+export default async function Page({params}:{params:Promise<{lang:Lang}>}){const {lang}=await params;let properties:import("@/lib/types").PublicProperty[]=[];try{const db=await getDb();const rows=await db.collection<Property>("properties").find({published:true,featured:true}).sort({updatedAt:-1}).limit(3).toArray();properties=rows.map(({_id,...p})=>localizeProperty(p,lang));}catch{}return <HomePage lang={lang} properties={properties}/>}
